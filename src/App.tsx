@@ -1,25 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
+import { ROUTES } from './constants';
+import { HomePage } from "./pages";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SnackbarProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={ROUTES.HOME} element={<HomePage/>} />
+          <Route path={ROUTES.DETAIL} element={<div style={{paddingTop: '100px'}}>Detail</div>} />
+          <Route path={ROUTES.COLLECTION} element={<div style={{paddingTop: '100px'}}>Collection</div>} />
+        </Routes>
+      </BrowserRouter>
+    </SnackbarProvider>
   );
 }
 
