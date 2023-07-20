@@ -1,0 +1,1 @@
+export { AnimeDetailComponent } from './AnimeDetailComponent';

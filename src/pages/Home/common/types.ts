@@ -9,4 +9,7 @@ export type AnimeList = {
     large: string;
   };
   seasonYear: string;
+  description: string;
+  meanScore: number;
+  popularity: number;
 };

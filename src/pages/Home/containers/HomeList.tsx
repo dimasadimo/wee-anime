@@ -50,7 +50,7 @@ const FETCH_ANIME = gql`
 `;
 
 export const HomeList = () => {
-
+  
   const PAGE_SIZE = 10;
   const [animeList, setAnimeList] = React.useState<AnimeList[]>([]);
   const [totalAnimeList, setTotalAnimeList] = React.useState<number>(0);

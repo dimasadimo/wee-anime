@@ -1,6 +1,7 @@
 import * as React from "react";
 import { AnimeList } from "../common/types";
 import styled from '@emotion/styled/macro';
+import { useNavigate } from "react-router-dom";
 
 export type AnimeCardComponentProps = {
   data: AnimeList;
@@ -8,9 +9,11 @@ export type AnimeCardComponentProps = {
 export const AnimeCardComponent: React.FC<AnimeCardComponentProps> = ({
   data
 }) => {
-  
+
+  const navigate = useNavigate();
+
   return (
-    <AnimeCardWrapper onClick={() => {}}>
+    <AnimeCardWrapper onClick={() => navigate(`/series/${data.id}`)}>
       <AnimeCardImageWrapper
         height={295}
         src={data.coverImage.large}

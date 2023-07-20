@@ -31,8 +31,7 @@ const HomeWrapper = styled.div`
 `;
 
 const HomeHeader = styled.div`
-  height: 8.75rem;
-  
+  height: 8.75rem;  
 `;
 
 const HeaderContent = styled.div`
