@@ -19,7 +19,7 @@ export const AnimeCardComponent: React.FC<AnimeCardComponentProps> = ({
         src={data.coverImage.large}
       />
       <AnimeCardTitle >{data.title.english || "No title provided"}</AnimeCardTitle>
-      <AnimeCardYear>{data.seasonYear || "No title provided"}</AnimeCardYear>
+      <AnimeCardYear>{data.seasonYear || "No year provided"}</AnimeCardYear>
     </AnimeCardWrapper>
   )
 }
@@ -38,7 +38,7 @@ const AnimeCardWrapper = styled.div`
 `;
 
 const AnimeCardImageWrapper = styled.img`
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 5),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 `;
 

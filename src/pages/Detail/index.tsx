@@ -1,1 +1,1 @@
-import { DetailPage } from "./DetailPage";
+export { DetailPage } from "./DetailPage";

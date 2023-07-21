@@ -13,7 +13,7 @@ export const HomePage = () => {
               <HeaderContentComponent>
                 <HeaderContentComponentOne>Most Popular Anime</HeaderContentComponentOne>
                 <HeaderContentComponentUl>
-                  <HeaderContentComponentLi>Satu</HeaderContentComponentLi>
+                  
                 </HeaderContentComponentUl>
               </HeaderContentComponent>
             </HeaderContentWrapper>
@@ -46,6 +46,22 @@ const HeaderContentWrapper = styled.div`
   max-width: calc(var(--content-width) + var(--content-wrapper-padding-inline)*2);
   padding-left: var(--content-wrapper-padding-inline);
   padding-right: var(--content-wrapper-padding-inline);
+
+  @media (max-width: 1350px) {
+    --content-width: 55.625rem;
+  }
+
+  @media (max-width: 1000px) {
+    --content-width: 35.625rem;
+  }
+
+  @media (max-width: 700px) {
+    --content-width: 25.625rem;
+  }
+
+  @media (max-width: 450px) {
+    --content-width: 15.625rem;
+  }
 `;
 
 const HeaderContentComponent = styled.div`

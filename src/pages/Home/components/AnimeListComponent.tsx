@@ -3,15 +3,17 @@ import { AnimeList } from "../common/types";
 import { ApolloError } from "@apollo/client";
 import styled from '@emotion/styled/macro';
 import { AnimeCardComponent } from ".";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { GrNext, GrPrevious } from 'react-icons/gr';
 
 export type AnimeListProps = {
   data: AnimeList[];
   isLoading: boolean;
   error: ApolloError | undefined;
-  // hasNextPage: boolean;
-  // setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  pageNumber: number;
+  hasNextPage: boolean;
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
   // totalAnimeSeries: number;
   // noResultsFound: boolean;
 };
@@ -19,12 +21,14 @@ export const AnimeListComponent: React.FC<AnimeListProps> = ({
   data,
   isLoading,
   error,
-  // hasNextPage,
-  // setPageNumber,
+  pageNumber,
+  hasNextPage,
+  setPageNumber,
   // totalAnimeSeries,
   // noResultsFound,
 }) => {
-
+  
+  
   const renderSkeletonCards = () => {
     const nodes = [];
     for (let i = 0; i < 10; i++) {
@@ -45,7 +49,7 @@ export const AnimeListComponent: React.FC<AnimeListProps> = ({
           {"Popular"}
       </AnimeListTitle>
       <AnimeListWrapper>
-        {data && data.map((item, i) => (
+        {!isLoading && data.map((item, i) => (
           <AnimeCardComponent
             data={item}
           />
@@ -54,6 +58,13 @@ export const AnimeListComponent: React.FC<AnimeListProps> = ({
         {isLoading && renderSkeletonCards()}
         <div>{error && "Error"}</div>
       </AnimeListWrapper>
+      {data && hasNextPage &&
+        <AnimeListPagination>
+          <ButtonPagination disabled={pageNumber === 1} onClick={() => setPageNumber(pageNumber - 1)}><GrPrevious /></ButtonPagination>
+          {pageNumber}
+          <ButtonPagination onClick={() =>setPageNumber(pageNumber + 1)}><GrNext/></ButtonPagination>
+        </AnimeListPagination>
+      }
     </>
   )
 }
@@ -71,6 +82,24 @@ export const AnimeListWrapper = styled.div`
   grid-column-gap: 3%;
   transition: all 0.5s ease-in-out;
   margin-top: 40px;
+
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(4, 215px);
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(3, 215px);
+  }
+
+  @media (max-width: 740px) {
+    grid-template-columns: repeat(2, 215px);
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(1, 215px);
+    justify-content: start;
+    margin-left: 3rem;  
+  }
 `;
 
 export const AnimeListTitle = styled.h5`
@@ -86,4 +115,34 @@ export const AnimeListTitle = styled.h5`
   padding-left: var(--content-wrapper-padding-inline);
   padding-right: var(--content-wrapper-padding-inline);
   padding-top: 2rem;
+
+  @media (max-width: 1350px) {
+    --content-width: 55.625rem;
+  }
+
+  @media (max-width: 1000px) {
+    --content-width: 35.625rem;
+  }
+
+  @media (max-width: 700px) {
+    --content-width: 25.625rem;
+  }
+
+  @media (max-width: 450px) {
+    --content-width: 15.625rem;
+  }
+`;
+
+export const AnimeListPagination = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+`;
+
+export const ButtonPagination = styled.button`
+  cursor: pointer;
+  background-color: #242423;
+  margin: 0 1rem 0 1rem;
+  border: none;
 `;

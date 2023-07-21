@@ -4,11 +4,8 @@ import { useLazyQuery, gql } from '@apollo/client';
 import { AnimeListComponent } from "../components";
 
 export type AnimeListQueryVariables = {
-  /** Page number */
   page?: number;
-  /** Number of results per page */
   perPage?: number;
-  /** Search query  */
   search?: string | null | undefined;
 };
 
@@ -58,19 +55,17 @@ export const HomeList = () => {
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(true);
 
-  const [fetchAnimeList, { loading, error, fetchMore }] = useLazyQuery<
+  const [fetchAnimeList, { loading, error }] = useLazyQuery<
     Data,
     AnimeListQueryVariables
   >(FETCH_ANIME, {
     variables: { page: 1, perPage: PAGE_SIZE },
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
-      
-      
+
       setAnimeList(data.Page.media);
-      // if (!data.Page.media.length) {
-      //   setNoResultsFound(true);
-      // }
+      if (!data.Page.media.length) setNoResultsFound(true);
+      setHasNextPage(data.Page.pageInfo.hasNextPage);
       // if (searchQuery) {
       //   setTotalAnimeSeries(data.Page.pageInfo.total);
       // }
@@ -79,11 +74,11 @@ export const HomeList = () => {
   });
 
   React.useEffect(() => {
-    // setTotalAnimeSeries(0);
-    // setAnimeSeries([]);
-    // setPageNumber(1);
-    // setHasNextPage(true);
-    // setNoResultsFound(false);
+    //setTotalAnimeSeries(0);
+    setAnimeList([]);
+    setPageNumber(1);
+    setHasNextPage(true);
+    setNoResultsFound(false);
     fetchAnimeList({
       variables: {
         search: null,
@@ -91,13 +86,29 @@ export const HomeList = () => {
     });
   }, []);
 
+  React.useEffect(() => {
+    if (pageNumber >= 1 && hasNextPage) {
+      onLoadMore(pageNumber);
+    }
+  }, [pageNumber, hasNextPage]);
+
+  const onLoadMore = (pageNumber: number) => {
+    return fetchAnimeList({
+      variables: {
+        page: pageNumber,
+        //search: searchQuery ? searchQuery : null,
+      },
+    });
+  };
+
   return (
     <AnimeListComponent 
       data={animeList}
       isLoading={loading}
       error={error}
-      // hasNextPage={hasNextPage}
-      // setPageNumber={setPageNumber}
+      pageNumber={pageNumber}
+      hasNextPage={hasNextPage}
+      setPageNumber={setPageNumber}
       // totalAnimeSeries={totalAnimeSeries}
       // noResultsFound={noResultsFound}
     />

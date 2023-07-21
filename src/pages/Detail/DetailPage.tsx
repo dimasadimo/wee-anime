@@ -29,7 +29,7 @@ export const DetailPage = () => {
 
 const DetailWrapper = styled.div`
   flex: 1 1 0;
-  padding: 3.75rem 0 3.75rem 0;
+  padding: 2.75rem 0 3.75rem 0;
 `;
 
 const DetailHeader = styled.div`
@@ -49,6 +49,22 @@ const DetailContentWrapper = styled.div`
   max-width: calc(var(--content-width) + var(--content-wrapper-padding-inline)*2);
   padding-left: var(--content-wrapper-padding-inline);
   padding-right: var(--content-wrapper-padding-inline);
+
+  @media (max-width: 1350px) {
+    --content-width: 55.625rem;
+  }
+
+  @media (max-width: 1000px) {
+    --content-width: 35.625rem;
+  }
+
+  @media (max-width: 700px) {
+    --content-width: 25.625rem;
+  }
+
+  @media (max-width: 450px) {
+    --content-width: 15.625rem;
+  }
 `;
 
 const DetailSpan = styled.span`

@@ -1,0 +1,1 @@
+export { CollectionListComponent } from './CollectionListComponent';
